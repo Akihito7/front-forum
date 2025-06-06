@@ -1,4 +1,5 @@
 import { CardGreetings } from "./components/home/card-greetings";
+import { CardPopularPosts } from "./components/home/card-popular-posts";
 import { CardPopularTags } from "./components/home/card-popular-tags";
 import { CardPost } from "./components/home/card-post";
 import { CardRules } from "./components/home/card-rules";
@@ -18,8 +19,9 @@ export default function Home() {
             <CardPost key={index} />
           ))}
         </div>
-        <div className="w-full  max-h-max rounded-md shadow-lg py-6 transition hover:shadow-xl">
+        <div className="w-full  max-h-max rounded-md shadow-lg py-6 transition hover:shadow-xl space-y-6">
           <CardTipWeekly />
+          <CardPopularPosts />
         </div>
       </div>
     </div>
