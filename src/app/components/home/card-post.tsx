@@ -13,7 +13,7 @@ export function CardPost() {
       </div>
 
       <h1 className="text-xl text-zinc-100 font-semibold mb-3 hover:underline cursor-pointer">
-        How to play Riven
+        How to play of Riven
       </h1>
 
       <div className="flex gap-2 flex-wrap mb-4">
