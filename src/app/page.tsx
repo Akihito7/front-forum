@@ -1,5 +1,6 @@
 import { CardGreetings } from "./components/home/card-greetings";
 import { CardPost } from "./components/home/card-post";
+import { CardTipWeekly } from "./components/home/card-tip-weekly";
 
 export default function Home() {
   return (
@@ -13,8 +14,8 @@ export default function Home() {
             <CardPost key={index} />
           ))}
         </div>
-        <div className="bg-[#1e1e1e] w-full rounded-md shadow-lg p-6 transition hover:shadow-xl">
-          Conteúdo
+        <div className="w-full rounded-md shadow-lg py-6 transition hover:shadow-xl">
+          <CardTipWeekly />
         </div>
       </div>
     </div>
