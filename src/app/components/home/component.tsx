@@ -6,8 +6,9 @@ import { CardRules } from "./card-rules";
 import { CardTipWeekly } from "./card-tip-weekly";
 
 export function HomeComponent() {
+  
   return (
-    <div className="h-screen w-screen flex justify-center">
+    <div className="min-h-screen flex justify-center">
       <div className="max-w-[1600px] w-full h-full grid grid-cols-[250px_1fr_350px] justify-items-center gap-4">
         <div className="w-full max-h-max rounded-md shadow-lg py-6 transition hover:shadow-xl space-y-6">
           <CardGreetings />
