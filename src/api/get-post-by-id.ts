@@ -6,6 +6,7 @@ interface GetPostByIdProps {
 }
 
 interface Post {
+  authorUsername: string
   authorId: string
   content: string
   createdAt: Date
@@ -15,6 +16,8 @@ interface Post {
   updatedAt: Date | null
   likes: number;
   comments: {
+    id : string;
+    authorUsername: string
     postId: string;
     authorId: string;
     content: string;
@@ -26,5 +29,6 @@ interface Post {
 
 export async function getPostById({ postId }: GetPostByIdProps): Promise<Post> {
   const response = await api.get(`/post/${postId}`);
+  console.log("its me response", response.data)
   return response.data;
 }
