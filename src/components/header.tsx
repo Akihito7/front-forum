@@ -1,4 +1,4 @@
-import { getUser } from "@/server-functions/get-user";
+import { getUser } from "@/server-actions/get-user";
 
 export async function Header() {
   const user = await getUser();
@@ -7,7 +7,7 @@ export async function Header() {
     <header className="bg-[#1e1e1e] border-b border-[#2a2a2a]">
       <div className="max-w-[1600px] mx-auto flex items-center justify-between px-6 py-4">
         <div className="text-violet-400 font-bold text-2xl select-none cursor-default">
-          by@akihito7
+          <a href="/">by@akihito7</a>
         </div>
 
         <div className="flex-1 max-w-md mx-6">

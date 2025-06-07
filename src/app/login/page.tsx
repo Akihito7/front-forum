@@ -1,7 +1,7 @@
 "use client";
 
 import { login } from "@/api/login";
-import { setCookie } from "@/server-functions/cookies";
+import { setCookie } from "@/server-actions/cookies";
 import { useMutation } from "@tanstack/react-query";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";

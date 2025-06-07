@@ -1,4 +1,4 @@
-import { getCookie } from "@/server-functions/cookies";
+import { getCookie } from "@/server-actions/cookies";
 import axios from "axios";
 
 export const api = axios.create({
