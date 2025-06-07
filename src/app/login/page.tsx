@@ -38,7 +38,8 @@ export default function LoginPage() {
     onSuccess: (data) => {
       setCookie({ key: "@token", value: data });
       toast.success("Logado com sucesso.");
-      router.push("/");
+      router.refresh();
+      router.push("/")
     },
     onError: (data: any) => {
       toast.error(data.message);
