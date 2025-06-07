@@ -2,11 +2,13 @@ import { api } from "@/services/axios";
 
 interface Post {
   authorId: string
+  authorName: string
   content: string
   createdAt: Date
   id: string
   tags: string[]
   title: string
+  likes: number;
   updatedAt: Date | null,
   comments: {
     postId: string;

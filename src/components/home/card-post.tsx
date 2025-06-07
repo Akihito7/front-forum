@@ -1,47 +1,63 @@
 import { useRouter } from "next/navigation";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 interface CardPostProps {
   authorId: string;
+  authorName: string;
   content: string;
   createdAt: Date;
   id: string;
   tags: string[];
   title: string;
+  likes: number;
   updatedAt: Date | null;
+  comments: {
+    postId: string;
+    authorId: string;
+    content: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+    likes?: number;
+  }[];
 }
 
 export function CardPost({
-  authorId,
-  content,
   createdAt,
   id,
   tags,
   title,
-  updatedAt,
+  authorName,
+  comments,
+  likes,
 }: CardPostProps) {
-  
   const router = useRouter();
 
   function handleNavigateToPost() {
     router.push(`/post/${id}`);
   }
 
+  const dateFormmated = formatDistanceToNow(createdAt, {
+    addSuffix: true,
+    locale: ptBR,
+  });
+
   return (
-    <div
-      className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl p-6 shadow-md hover:shadow-lg transition"
-      onClick={handleNavigateToPost}
-    >
+    <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl p-6 shadow-md hover:shadow-lg transition">
       <div className="flex items-center gap-3 mb-4 text-zinc-400 text-sm">
         <img
           src="https://i.pravatar.cc/40"
           alt="Avatar"
           className="w-8 h-8 rounded-full"
         />
-        <span className="font-medium text-zinc-200">{authorId}</span>
-        <span className="text-zinc-500">{createdAt.toString()}</span>
+        <span className="font-medium text-zinc-200">@{authorName}</span>
+        <span className="text-zinc-500">{dateFormmated}</span>
       </div>
 
-      <h1 className="text-xl text-zinc-100 font-semibold mb-3 hover:underline cursor-pointer">
+      <h1
+        className="text-xl text-zinc-100 font-semibold mb-3 hover:underline cursor-pointer"
+        onClick={handleNavigateToPost}
+      >
         {title}
       </h1>
 
@@ -59,8 +75,13 @@ export function CardPost({
       </div>
 
       <div className="flex items-center gap-4 text-zinc-400 text-sm">
-        <span>🔥 20 reações</span>
-        <span>💬 12 comentários</span>
+        <span>
+          🔥 {likes} {likes > 1 ? "likes" : "like"}
+        </span>
+        <span>
+          💬 {comments?.length}{" "}
+          {comments?.length > 1 ? "comentários" : "comentário"}
+        </span>
       </div>
     </div>
   );
