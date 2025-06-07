@@ -1,5 +1,5 @@
 "use client";
-import { useFeed } from "@/hooks/use-feed";
+import { useFeed } from "@/app/(home)/hooks/use-feed";
 import { CardGreetings } from "./card-greetings";
 import { CardPopularPosts } from "./card-popular-posts";
 import { CardPopularTags } from "./card-popular-tags";
