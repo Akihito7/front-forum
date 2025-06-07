@@ -1,5 +1,54 @@
-'use client'
+"use client";
+
+import { login } from "@/api/login";
+import { setCookie } from "@/server-functions/cookies";
+import { useMutation } from "@tanstack/react-query";
+import { useForm, Controller } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+
+const LoginFormSchema = z.object({
+  email: z.string().email({ message: "E-mail inválido." }),
+  password: z
+    .string()
+    .min(8, { message: "A senha deve ter no mínimo 8 caracteres." }),
+});
+
+type LoginForm = z.infer<typeof LoginFormSchema>;
+
 export default function LoginPage() {
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<LoginForm>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(LoginFormSchema),
+  });
+
+  const router = useRouter();
+
+  const { mutateAsync } = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      setCookie({ key: "@token", value: data });
+      toast.success("Logado com sucesso.");
+      router.push("/");
+    },
+    onError: (data: any) => {
+      toast.error(data.message);
+    },
+  });
+
+  async function handleCreateAccount(data: LoginForm) {
+    await mutateAsync(data);
+  }
+
   return (
     <div className="min-h-screen bg-[#121212] flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-[#1e1e1e] rounded-md shadow-lg p-8 space-y-6">
@@ -7,7 +56,10 @@ export default function LoginPage() {
           Bem-vindo de volta
         </h1>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="space-y-4"
+          onSubmit={handleSubmit(handleCreateAccount)}
+        >
           <div>
             <label
               htmlFor="email"
@@ -15,13 +67,27 @@ export default function LoginPage() {
             >
               E-mail
             </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="seu@email.com"
-              required
-              className="w-full bg-[#2a2a2a] text-zinc-100 rounded-md px-4 py-3 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 transition"
+
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="seu@email.com"
+                  className={`w-full bg-[#2a2a2a] text-zinc-100 rounded-md px-4 py-3 placeholder:text-zinc-500 focus:outline-none focus:ring-2 transition ${
+                    errors.email ? "ring-red-500" : "focus:ring-violet-500"
+                  }`}
+                  {...field}
+                />
+              )}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -31,13 +97,27 @@ export default function LoginPage() {
             >
               Senha
             </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="••••••••"
-              required
-              className="w-full bg-[#2a2a2a] text-zinc-100 rounded-md px-4 py-3 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 transition"
+
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="••••••••"
+                  className={`w-full bg-[#2a2a2a] text-zinc-100 rounded-md px-4 py-3 placeholder:text-zinc-500 focus:outline-none focus:ring-2 transition ${
+                    errors.password ? "ring-red-500" : "focus:ring-violet-500"
+                  }`}
+                  {...field}
+                />
+              )}
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <button
