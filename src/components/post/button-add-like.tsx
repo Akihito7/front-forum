@@ -1,12 +1,6 @@
 "use client";
 
-import { addLike } from "@/api/add-like";
-import { checkLikeExists } from "@/api/check-like-exists";
-import { getLike } from "@/api/get-like";
-import { removeLike } from "@/api/remove-like";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useButtonAddLike } from "./hooks/use-button-add-like";
 
@@ -16,7 +10,6 @@ interface ButtonAddLikeProps {
 }
 
 export function ButtonAddLike({ postId, userId }: ButtonAddLikeProps) {
-  
   const { like, handleAddLike, handleDeleteLike } = useButtonAddLike({
     postId,
     userId,
