@@ -1,9 +1,10 @@
+import { addLike } from "@/api/add-like";
 import { getPostById } from "@/api/get-post-by-id";
 import { AnswerForm } from "@/components/post/answer-form";
+import { ButtonAddLike } from "@/components/post/button-add-like";
 import { getUser } from "@/server-actions/get-user";
 
 export default async function PostPage({ params }: any) {
-  
   const user = await getUser();
 
   const { id: postId } = params;
@@ -39,7 +40,7 @@ export default async function PostPage({ params }: any) {
         </div>
 
         <div className="flex items-center space-x-1 text-red-500 font-semibold select-none">
-          <span>❤️</span>
+          <ButtonAddLike postId={post.id} />
           <span>{post.likes}</span>
         </div>
       </article>
