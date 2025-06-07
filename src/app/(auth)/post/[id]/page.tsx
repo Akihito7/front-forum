@@ -1,4 +1,5 @@
 import { getPostById } from "@/api/get-post-by-id";
+import { AnswerForm } from "@/components/post/answer-form";
 import { getUser } from "@/server-actions/get-user";
 
 export default async function PostPage({ params }: any) {
@@ -63,20 +64,7 @@ export default async function PostPage({ params }: any) {
           )
         )}
       </section>
-
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-white">Deixe sua resposta</h2>
-        <textarea
-          className="w-full min-h-[120px] bg-[#2a2a2a] text-zinc-100 rounded-md p-4 resize-none focus:outline-none focus:ring-2 focus:ring-violet-500"
-          placeholder="Escreva sua resposta aqui..."
-        />
-        <button
-          type="submit"
-          className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-md font-medium transition"
-        >
-          Enviar resposta
-        </button>
-      </section>
+      <AnswerForm postId={post.id} />
     </div>
   );
 }
