@@ -3,6 +3,7 @@ import { AnswerForm } from "@/components/post/answer-form";
 import { ButtonAddLike } from "@/components/post/button-add-like";
 import { PostActions } from "@/components/post/post-actions";
 import { getUser } from "@/server-actions/get-user";
+import { Heart } from "lucide-react";
 
 export default async function PostPage({ params }: any) {
   const user = await getUser();
@@ -33,7 +34,10 @@ export default async function PostPage({ params }: any) {
         </div>
 
         <div className="flex items-center space-x-1 text-red-500 font-semibold select-none">
-          <ButtonAddLike postId={post.id} />
+          <ButtonAddLike
+            postId={post.id}
+            userId={user?.id}
+          />
           <span>{post.likes}</span>
         </div>
       </article>
@@ -51,7 +55,7 @@ export default async function PostPage({ params }: any) {
               <p>{content}</p>
 
               <div className="mt-3 flex items-center space-x-1 text-red-500 font-semibold select-none">
-                <span>❤️</span>
+                <Heart className="w-6 h-6 text-red-500 fill-red-500" />
                 <span>{likes}</span>
               </div>
             </div>
