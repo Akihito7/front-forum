@@ -1,62 +1,110 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { createPost } from "@/api/create-post";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+const createPostSchema = z.object({
+  title: z.string().min(8, "O título deve ter no mínimo 8 caracteres"),
+  content: z.string().min(64, "O conteúdo deve ter no mínimo 64 caracteres"),
+  tags: z.array(z.string().min(1)).min(1, "Adicione ao menos uma tag"),
+});
+
+type CreatePostFormData = z.infer<typeof createPostSchema>;
 
 export default function CreatePostPage() {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [tagInput, setTagInput] = useState('')
-  const [tags, setTags] = useState<string[]>([])
+  const [tagInput, setTagInput] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<CreatePostFormData>({
+    resolver: zodResolver(createPostSchema),
+    defaultValues: {
+      title: "",
+      content: "",
+      tags: [],
+    },
+  });
 
   const handleAddTag = () => {
-    const newTag = tagInput.trim()
-
+    const newTag = tagInput.trim();
     if (newTag && !tags.includes(newTag)) {
-      setTags([...tags, newTag])
+      const updatedTags = [...tags, newTag];
+      setTags(updatedTags);
+      setValue("tags", updatedTags);
     }
-
-    setTagInput('')
-  }
+    setTagInput("");
+  };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove))
-  }
+    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
+    setTags(updatedTags);
+    setValue("tags", updatedTags);
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const router = useRouter();
 
-    console.log({
-      title,
-      content,
-      tags,
-    })
+  const { mutateAsync } = useMutation({
+    mutationFn: createPost,
+    onSuccess: (data) => {
+      toast.success("Post Criado com sucesso.");
+      reset({ content: "", tags: [], title: "" });
+      setTags([]);
+      router.push("/");
+    },
+    onError: (data) => {
+      toast.error(data.message);
+    },
+  });
 
+  async function handleCreatePost(data: CreatePostFormData) {
+    await mutateAsync(data);
   }
 
   return (
     <div className="max-w-[800px] mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-white mb-6">Criar novo post</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit(handleCreatePost)} className="space-y-6">
         <div>
           <label className="block text-zinc-400 mb-1 font-medium">Título</label>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            {...register("title")}
             placeholder="Ex: Como usar PostgreSQL com NestJS"
             className="w-full bg-[#2a2a2a] text-zinc-100 rounded-md px-4 py-3 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 transition"
           />
+          {errors.title && (
+            <span className="text-red-500 text-sm mt-1 block">
+              {errors.title.message}
+            </span>
+          )}
         </div>
 
         <div>
-          <label className="block text-zinc-400 mb-1 font-medium">Conteúdo</label>
+          <label className="block text-zinc-400 mb-1 font-medium">
+            Conteúdo
+          </label>
           <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            {...register("content")}
             placeholder="Digite o conteúdo do post aqui..."
             className="w-full min-h-[200px] bg-[#2a2a2a] text-zinc-100 rounded-md p-4 resize-none focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
+          {errors.content && (
+            <span className="text-red-500 text-sm mt-1 block">
+              {errors.content.message}
+            </span>
+          )}
         </div>
 
         <div>
@@ -78,6 +126,12 @@ export default function CreatePostPage() {
               Adicionar
             </button>
           </div>
+
+          {errors.tags && (
+            <span className="text-red-500 text-sm block mb-2">
+              {errors.tags.message}
+            </span>
+          )}
 
           <div className="flex gap-2 flex-wrap">
             {tags.map((tag) => (
@@ -106,5 +160,5 @@ export default function CreatePostPage() {
         </button>
       </form>
     </div>
-  )
+  );
 }

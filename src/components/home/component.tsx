@@ -6,7 +6,6 @@ import { CardRules } from "./card-rules";
 import { CardTipWeekly } from "./card-tip-weekly";
 
 export function HomeComponent() {
-  
   return (
     <div className="min-h-screen flex justify-center">
       <div className="max-w-[1600px] w-full h-full grid grid-cols-[250px_1fr_350px] justify-items-center gap-4">
