@@ -1,7 +1,7 @@
-import { addLike } from "@/api/add-like";
 import { getPostById } from "@/api/get-post-by-id";
 import { AnswerForm } from "@/components/post/answer-form";
 import { ButtonAddLike } from "@/components/post/button-add-like";
+import { PostActions } from "@/components/post/post-actions";
 import { getUser } from "@/server-actions/get-user";
 
 export default async function PostPage({ params }: any) {
@@ -17,14 +17,7 @@ export default async function PostPage({ params }: any) {
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold text-white">{post.title}</h1>
 
-          {user?.id === post.authorId && (
-            <a
-              href={`/post/edit/${post.id}`}
-              className="text-sm bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded-md font-medium transition"
-            >
-              ✏️ Editar
-            </a>
-          )}
+          {user?.id && <PostActions postId={post.id} />}
         </div>
 
         <div className="text-zinc-400 text-sm">
