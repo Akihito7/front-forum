@@ -1,62 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-const mockPost = {
-  title: "Como melhorar performance de uma API REST?",
-  content:
-    "Estou com uma API feita em NestJS e gostaria de saber quais são boas práticas para melhorar a performance dela...",
-  tags: ["nestjs", "performance", "backend"],
-};
+import { usePost } from "../hooks/use-post";
 
 export default function EditPostPage() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tagInput, setTagInput] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
-
-  // Carrega os dados simulados
-  useEffect(() => {
-    setTitle(mockPost.title);
-    setContent(mockPost.content);
-    setTags(mockPost.tags);
-  }, []);
-
-  const handleAddTag = () => {
-    const newTag = tagInput.trim();
-    if (newTag && !tags.includes(newTag)) {
-      setTags([...tags, newTag]);
-    }
-    setTagInput("");
-  };
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const dataToSend = {
-      title,
-      content,
-      tags,
-    };
-
-    console.log("Atualizando post:", dataToSend);
-  };
-
+  const {
+    handleAddTag,
+    handleRemoveTag,
+    handleSubmit,
+    handleUpdatePost,
+    post,
+    postIsLoading,
+    register,
+    setValue,
+    tags,
+    setTagInput,
+    tagInput,
+  } = usePost();
+  
   return (
     <div className="max-w-[800px] mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-white mb-6">Editar post</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit(handleUpdatePost)} className="space-y-6">
         <div>
           <label className="block text-zinc-400 mb-1 font-medium">Título</label>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            {...register("title")}
             className="w-full bg-[#2a2a2a] text-zinc-100 rounded-md px-4 py-3 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 transition"
           />
         </div>
@@ -66,8 +36,7 @@ export default function EditPostPage() {
             Conteúdo
           </label>
           <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            {...register("content")}
             className="w-full min-h-[200px] bg-[#2a2a2a] text-zinc-100 rounded-md p-4 resize-none focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
         </div>
