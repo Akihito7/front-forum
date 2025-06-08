@@ -1,12 +1,11 @@
 import { getPostById } from "@/api/get-post-by-id";
 import { AnswerForm } from "@/components/post/answer-form";
 import { ButtonAddLike } from "@/components/post/button-add-like";
+import { CommentList } from "@/components/post/comment-list";
 import { PostActions } from "@/components/post/post-actions";
 import { getUser } from "@/server-actions/get-user";
-import { Heart, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { AnswerList } from "@/components/post/answer.list";
 
 export default async function PostPage({ params }: any) {
   const user = await getUser();
@@ -49,9 +48,9 @@ export default async function PostPage({ params }: any) {
       <section className="space-y-6">
         <h2 className="text-xl font-semibold text-white">Respostas</h2>
 
-        <AnswerList data={post.comments} userId={user?.id} />
+        <CommentList data={post.comments} userId={user?.id} />
       </section>
-      <AnswerForm postId={post.id} />
+      <AnswerForm postId={post.id} userId={user?.id} />
     </div>
   );
 }

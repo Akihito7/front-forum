@@ -50,7 +50,9 @@ export function CardPost({
           alt="Avatar"
           className="w-8 h-8 rounded-full"
         />
-        <span className="font-medium text-zinc-200">@{authorName}</span>
+        <a href={`profile/${authorName}`}>
+          <span className="font-medium text-zinc-200">@{authorName}</span>
+        </a>
         <span className="text-zinc-500">{dateFormmated}</span>
       </div>
 

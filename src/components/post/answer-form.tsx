@@ -18,9 +18,10 @@ type AnswerFormDataType = z.infer<typeof answerFormDataSchema>;
 
 interface AnswerFormProps {
   postId: string;
+  userId: string | undefined;
 }
 
-export function AnswerForm({ postId }: AnswerFormProps) {
+export function AnswerForm({ postId, userId }: AnswerFormProps) {
   const router = useRouter();
   const {
     control,
@@ -75,8 +76,12 @@ export function AnswerForm({ postId }: AnswerFormProps) {
 
       <button
         type="button"
-        className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-md font-medium transition"
-        onClick={handleSubmit(handleSendComment)}
+        className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-md font-medium transition disabled:opacity-25"
+        onClick={() => {
+          if (!userId)
+            return toast.warning("Você precisa logar antes de comentar.");
+          handleSubmit(handleSendComment)();
+        }}
         disabled={isPending}
       >
         {isPending ? "Enviando..." : "Enviar resposta"}
