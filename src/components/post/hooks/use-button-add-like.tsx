@@ -47,7 +47,7 @@ export function useButtonAddLike({ postId, userId }: UseButtonAddLikeProps) {
       authorId: userId!,
     });
   }
-  const { data: like } = useQuery({
+  const { data: like, isLoading: checkLikeIsLoading } = useQuery({
     queryKey: ["check-like"],
     queryFn: checkIfUserAlreadyLikeThisPost,
     enabled: !!userId,
@@ -57,5 +57,6 @@ export function useButtonAddLike({ postId, userId }: UseButtonAddLikeProps) {
     handleAddLike,
     handleDeleteLike,
     like,
+    checkLikeIsLoading,
   };
 }

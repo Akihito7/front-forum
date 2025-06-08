@@ -10,30 +10,36 @@ interface ButtonAddLikeProps {
 }
 
 export function ButtonAddLike({ postId, userId }: ButtonAddLikeProps) {
-  const { like, handleAddLike, handleDeleteLike } = useButtonAddLike({
-    postId,
-    userId,
-  });
+  const { like, checkLikeIsLoading, handleAddLike, handleDeleteLike } =
+    useButtonAddLike({
+      postId,
+      userId,
+    });
 
   return (
-    <Heart
-      className={`w-6 h-6 cursor-pointer transition-all ${
-        like?.likeExists
-          ? "text-red-500 fill-red-500"
-          : "text-white fill-transparent"
-      }`}
-      onClick={async () => {
-        if (!userId) {
-          toast.warning("Você precisa logar antes de curtir.");
-          return;
-        }
+    <>
+      {checkLikeIsLoading && null}
+      {!checkLikeIsLoading && (
+        <Heart
+          className={`w-6 h-6 cursor-pointer transition-all ${
+            like?.likeExists
+              ? "text-red-500 fill-red-500"
+              : "text-white fill-transparent"
+          }`}
+          onClick={async () => {
+            if (!userId) {
+              toast.warning("Você precisa logar antes de curtir.");
+              return;
+            }
 
-        if (like && like.likeExists) {
-          await handleDeleteLike();
-        } else {
-          await handleAddLike({ postId });
-        }
-      }}
-    />
+            if (like && like.likeExists) {
+              await handleDeleteLike();
+            } else {
+              await handleAddLike({ postId });
+            }
+          }}
+        />
+      )}
+    </>
   );
 }
