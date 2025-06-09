@@ -16,7 +16,7 @@ export function DropdownMenuHeader({ user }: DropdownMenuHeaderProps) {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className="w-[150px] flex items-center justify-center gap-3 bg-[#2a2a2a] px-4 py-2 rounded-md border border-zinc-700 focus:outline-none focus:ring-0
+          className="cursor-pointer w-[150px] flex items-center justify-center gap-3 bg-[#2a2a2a] px-4 py-2 rounded-md border border-zinc-700 focus:outline-none focus:ring-0
 "
         >
           <div className="w-8 h-8 flex items-center justify-center bg-violet-600 text-white font-bold rounded-full text-sm">
