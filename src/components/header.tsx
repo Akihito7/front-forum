@@ -1,4 +1,5 @@
 import { getUser } from "@/server-actions/get-user";
+import { DropdownMenuHeader } from "./dropdown-menu-header";
 
 export async function Header() {
   const user = await getUser();
@@ -41,19 +42,7 @@ export async function Header() {
             >
               Criar Post
             </a>
-
-            <div className="flex items-center gap-3 bg-[#2a2a2a] px-4 py-2 rounded-md border border-zinc-700">
-              <div className="w-8 h-8 flex items-center justify-center bg-violet-600 text-white font-bold rounded-full text-sm">
-                {user.username.charAt(0).toUpperCase()}
-              </div>
-
-              <div className="text-zinc-200 text-sm">
-                <span className="text-xs text-zinc-500 block">Logado como</span>
-                <span className="font-medium text-violet-400">
-                  @{user.username}
-                </span>
-              </div>
-            </div>
+            <DropdownMenuHeader user={user} />
           </div>
         )}
       </div>
