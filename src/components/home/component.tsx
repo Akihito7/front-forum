@@ -8,7 +8,7 @@ import { CardRules } from "./card-rules";
 import { CardTipWeekly } from "./card-tip-weekly";
 
 export function HomeComponent() {
-  const { posts } = useFeed();
+  const { posts, tip } = useFeed();
 
   return (
     <div className="min-h-screen flex justify-center">
@@ -26,7 +26,7 @@ export function HomeComponent() {
           )}
         </div>
         <div className="w-full  max-h-max rounded-md shadow-lg py-6 transition hover:shadow-xl space-y-6">
-          <CardTipWeekly />
+          {tip && <CardTipWeekly tip={tip} />}
           <CardPopularPosts />
         </div>
       </div>
