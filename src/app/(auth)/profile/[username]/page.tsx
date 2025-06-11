@@ -1,6 +1,8 @@
 import { getProfile } from "@/api/get-profile";
 import { formatterDate } from "@/utils/formmaterDate";
 import { ModalFollow } from "./modal-follow";
+import { getUser } from "@/server-actions/get-user";
+import { ActionFollow } from "./action-follow";
 
 interface Post {
   id: string;
@@ -30,6 +32,12 @@ export default async function ProfilePage({ params }: any) {
 
   const { user, posts, comment } = await getProfile({ username });
 
+  const currentUser = await getUser();
+
+  const currentUserFollowsThisUser = user.followersOfUser.some(
+    (follower) => follower.followerId === currentUser?.id
+  );
+
   return (
     <main className="max-w-6xl mx-auto p-6 grid grid-cols-[2fr_1fr] gap-10">
       <section className="space-y-10">
@@ -39,7 +47,19 @@ export default async function ProfilePage({ params }: any) {
           </div>
 
           <div>
-            <h1 className="text-4xl font-bold text-white">{user.name}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-4xl font-bold text-white">{user.name}</h1>
+              {currentUser && currentUser.id !== user.id && (
+                <ActionFollow
+                  actionType={
+                    currentUserFollowsThisUser ? "unfollow" : "follow"
+                  }
+                  currentUserId={currentUser.id}
+                  targetUserId={user.id}
+                />
+              )}
+            </div>
+
             <p className="text-violet-400 text-xl mb-2">@{user.username}</p>
 
             <div className="flex space-x-8 mt-6 text-zinc-300">
