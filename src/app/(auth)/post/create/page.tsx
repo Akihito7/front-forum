@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createPost } from "@/api/create-post";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BackButton } from "@/components/post/back-button";
 
 const createPostSchema = z.object({
   title: z.string().min(8, "O título deve ter no mínimo 8 caracteres"),
@@ -72,7 +73,8 @@ export default function CreatePostPage() {
   }
 
   return (
-    <div className="max-w-[800px] mx-auto px-4 py-10">
+    <div className="max-w-[800px] mx-auto px-4 py-10 space-y-10">
+      <BackButton />
       <h1 className="text-3xl font-bold text-white mb-6">Criar novo post</h1>
 
       <form onSubmit={handleSubmit(handleCreatePost)} className="space-y-6">

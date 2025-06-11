@@ -1,5 +1,6 @@
 import { getPostById } from "@/api/get-post-by-id";
 import { AnswerForm } from "@/components/post/answer-form";
+import { BackButton } from "@/components/post/back-button";
 import { ButtonAddLike } from "@/components/post/button-add-like";
 import { CommentList } from "@/components/post/comment-list";
 import { PostActions } from "@/components/post/post-actions";
@@ -22,6 +23,8 @@ export default async function PostPage({ params }: any) {
 
   return (
     <div className="max-w-[900px] mx-auto px-4 py-8 space-y-10">
+      <BackButton />
+
       {!post && <PostSkeleton />}
 
       {post && (

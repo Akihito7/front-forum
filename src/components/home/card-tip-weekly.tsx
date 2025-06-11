@@ -1,9 +1,9 @@
 import { useFeed } from "@/app/(home)/hooks/use-feed";
 
 export function CardTipWeekly() {
-  const { tip } = useFeed();
+  const { tip, tipIsLoading } = useFeed();
 
-  if (!tip) {
+  if (!tip || tipIsLoading) {
     return (
       <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-2xl p-6 shadow-lg animate-pulse">
         <div className="flex items-center justify-between mb-4">
@@ -23,6 +23,7 @@ export function CardTipWeekly() {
       </div>
     );
   }
+
   return (
     <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-2xl p-6 shadow-lg transition hover:shadow-xl hover:border-violet-500 duration-200">
       <div className="flex items-center justify-between mb-4">

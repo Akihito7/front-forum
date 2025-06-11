@@ -2,6 +2,7 @@
 
 import { PostSkeleton } from "@/components/post/post-skeleton";
 import { usePost } from "../hooks/use-post";
+import { BackButton } from "@/components/post/back-button";
 
 export default function EditPostPage() {
   const {
@@ -19,7 +20,8 @@ export default function EditPostPage() {
   } = usePost();
 
   return (
-    <div className="max-w-[800px] mx-auto px-4 py-10">
+    <div className="max-w-[800px] mx-auto px-4 py-10 space-y-10">
+      <BackButton />
       {postIsLoading && <PostSkeleton />}
 
       {!postIsLoading && (
