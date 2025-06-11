@@ -1,5 +1,6 @@
 import { getProfile } from "@/api/get-profile";
 import { formatterDate } from "@/utils/formmaterDate";
+import { ModalFollow } from "./modal-follow";
 
 interface Post {
   id: string;
@@ -22,13 +23,6 @@ interface Comment {
   updatedAt: Date;
   likes: number;
   postTitle: string;
-}
-
-interface Answer {
-  id: string;
-  questionTitle: string;
-  createdAt: string;
-  excerpt: string;
 }
 
 export default async function ProfilePage({ params }: any) {
@@ -55,8 +49,28 @@ export default async function ProfilePage({ params }: any) {
               </div>
               <div>
                 <strong className="text-white">{user.totalComments}</strong>{" "}
-                {user.totalComments > 1 ? "comentários" : "comentário"}
+                {user.totalComments > 1 ? "Comentários" : "Comentário"}
               </div>
+              <ModalFollow
+                title="Seguidores"
+                data={user.followersOfUser}
+                key={user.followersOfUser.length}
+              >
+                <div className="cursor-pointer">
+                  <strong className="text-white">
+                    {user.followersOfUser.length}
+                  </strong>{" "}
+                  Seguidores
+                </div>
+              </ModalFollow>
+              <ModalFollow data={user.usersIamFollowing} title="Seguindo">
+                <div className="cursor-pointer">
+                  <strong className="text-white">
+                    {user.usersIamFollowing.length}
+                  </strong>{" "}
+                  Seguindo
+                </div>
+              </ModalFollow>
             </div>
           </div>
         </header>

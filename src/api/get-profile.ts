@@ -13,7 +13,9 @@ interface Data {
     createdAt: Date;
     updatedAt: Date;
     totalPosts: number
-    totalComments: number
+    totalComments: number;
+    followersOfUser: Followers,
+    usersIamFollowing: Followings,
   },
   posts: {
     id: string
@@ -39,8 +41,22 @@ interface Data {
   }[]
 }
 
+export type Followers = {
+  followId: string;
+  followerId: string
+  followerName: string;
+  followedAt: Date | undefined
+}[]
+
+export type Followings = {
+  followId: string
+  followingId: string;
+  followingName: string;
+  followedAt: Date | undefined
+}[]
+
 export async function getProfile({ username }: GetProfileProps): Promise<Data> {
   const response = await api.get(`/user/profile/${username}`)
-  const data = response.data
+  const data = response.data;
   return data
 }
