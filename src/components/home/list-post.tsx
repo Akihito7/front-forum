@@ -1,6 +1,46 @@
+import { useFeed } from "@/app/(home)/hooks/use-feed";
 import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+
+export function ListPost() {
+  const { posts, postIsLoading } = useFeed();
+  return (
+    <div className="w-full rounded-md shadow-lg p-6 transition hover:shadow-xl space-y-4">
+      {postIsLoading &&
+        [...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl p-6 shadow-md animate-pulse"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 rounded-full bg-zinc-700" />
+              <div className="h-4 bg-zinc-700 rounded w-24" />
+              <div className="h-4 bg-zinc-700 rounded w-16 ml-auto" />
+            </div>
+
+            <div className="h-6 bg-zinc-700 rounded w-3/4 mb-3" />
+
+            <div className="flex gap-2 flex-wrap mb-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-5 bg-violet-950 rounded-md w-16" />
+              ))}
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="h-4 bg-zinc-700 rounded w-20" />
+              <div className="h-4 bg-zinc-700 rounded w-24" />
+            </div>
+          </div>
+        ))}
+
+      {!postIsLoading &&
+        posts &&
+        posts.length > 0 &&
+        posts.map((post: any) => <CardPost key={post.id} {...post} />)}
+    </div>
+  );
+}
 
 interface CardPostProps {
   authorId: string;
@@ -22,7 +62,7 @@ interface CardPostProps {
   }[];
 }
 
-export function CardPost({
+function CardPost({
   createdAt,
   id,
   tags,

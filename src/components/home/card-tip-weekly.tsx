@@ -1,10 +1,28 @@
-import { Tip } from "@/api/get-current-tip";
+import { useFeed } from "@/app/(home)/hooks/use-feed";
 
-interface CardTipWeeklyProps {
-  tip: Tip;
-}
+export function CardTipWeekly() {
+  const { tip } = useFeed();
 
-export function CardTipWeekly({ tip }: CardTipWeeklyProps) {
+  if (!tip) {
+    return (
+      <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-2xl p-6 shadow-lg animate-pulse">
+        <div className="flex items-center justify-between mb-4">
+          <div className="h-4 bg-violet-600 rounded w-28"></div>
+          <div className="h-3 bg-zinc-700 rounded w-16"></div>
+        </div>
+
+        <div className="h-6 bg-zinc-700 rounded mb-2 w-3/4"></div>
+
+        <div className="space-y-2 mb-4">
+          <div className="h-4 bg-zinc-700 rounded w-full"></div>
+          <div className="h-4 bg-zinc-700 rounded w-5/6"></div>
+          <div className="h-4 bg-zinc-700 rounded w-2/3"></div>
+        </div>
+
+        <div className="h-6 bg-violet-600 rounded w-24"></div>
+      </div>
+    );
+  }
   return (
     <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-2xl p-6 shadow-lg transition hover:shadow-xl hover:border-violet-500 duration-200">
       <div className="flex items-center justify-between mb-4">
