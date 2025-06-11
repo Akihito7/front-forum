@@ -30,7 +30,9 @@ export default async function PostPage({ params }: any) {
             <div className="flex justify-between items-center">
               <h1 className="text-3xl font-bold text-white">{post.title}</h1>
 
-              {user?.id && <PostActions postId={post.id} />}
+              {user && post.authorId === user.id && (
+                <PostActions postId={post.id} />
+              )}
             </div>
 
             <div className="text-zinc-400 text-sm">
