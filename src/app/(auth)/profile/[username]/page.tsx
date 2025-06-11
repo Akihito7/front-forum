@@ -3,6 +3,7 @@ import { formatterDate } from "@/utils/formmaterDate";
 import { ModalFollow } from "./modal-follow";
 import { getUser } from "@/server-actions/get-user";
 import { ActionFollow } from "./action-follow";
+import { BackButton } from "@/components/post/back-button";
 
 interface Post {
   id: string;
@@ -41,6 +42,7 @@ export default async function ProfilePage({ params }: any) {
   return (
     <main className="max-w-6xl mx-auto p-6 grid grid-cols-[2fr_1fr] gap-10">
       <section className="space-y-10">
+        <BackButton />
         <header className="flex items-center space-x-8 bg-[#1e1e1e] rounded-md p-6 shadow-lg">
           <div className="w-28 h-28 rounded-full bg-violet-700 flex items-center justify-center text-white text-5xl font-bold">
             {user.name[0]}

@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EditFormSkeleton } from "@/components/settings/edit-form-skeleton";
+import { BackButton } from "@/components/post/back-button";
 
 const FormSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
@@ -106,7 +107,8 @@ export default function EditProfilePage() {
   }, [user, isLoading]);
 
   return (
-    <main className="max-w-md mx-auto p-6 bg-[#1e1e1e] rounded-md shadow-lg mt-12">
+    <main className="max-w-md mx-auto p-6 bg-[#1e1e1e] rounded-md shadow-lg mt-12 space-y-10">
+      <BackButton />
       {isLoading && <EditFormSkeleton />}
 
       {!isLoading && (

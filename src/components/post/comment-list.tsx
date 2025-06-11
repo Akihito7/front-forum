@@ -88,9 +88,23 @@ function CommentItem({
 }: CommentItemProps) {
   return (
     <div className="border border-zinc-800 rounded-md p-4 text-zinc-200 bg-[#1e1e1e]">
-      <div className="text-sm text-zinc-400 mb-2">
-        por @{comment.authorUsername}
+      <div className="flex justify-between">
+        <div className="text-sm text-zinc-400 mb-2">
+          por @{comment.authorUsername}
+        </div>
+        {userId === comment.authorId && (
+          <div className="flex gap-2">
+            <span className="cursor-pointer text-sm px-2 py-1 rounded-md border border-zinc-600 text-zinc-300 hover:border-violet-500 hover:text-violet-400 transition">
+              Editar
+            </span>
+
+            <span className="cursor-pointer text-sm px-2 py-1 rounded-md border border-zinc-600 text-zinc-300 hover:border-rose-500 hover:text-rose-400 transition">
+              Excluir
+            </span>
+          </div>
+        )}
       </div>
+
       <p>{comment.content}</p>
 
       <div className="mt-3 flex items-center space-x-1 text-red-500 font-semibold select-none">

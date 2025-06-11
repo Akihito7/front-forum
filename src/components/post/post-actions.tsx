@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 interface PostActionsProps {
   postId: string;
 }
+
 export function PostActions({ postId }: PostActionsProps) {
   const router = useRouter();
 
@@ -31,16 +32,17 @@ export function PostActions({ postId }: PostActionsProps) {
     <div className="flex gap-2">
       <a
         href={`/post/edit/${postId}`}
-        className="text-sm bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded-md font-medium transition"
+        className="text-sm px-3 py-1 rounded-md border border-zinc-600 text-zinc-300 hover:border-violet-500 hover:text-violet-400 transition"
       >
         Editar
       </a>
+
       <DialogConfirmation
         onConfirm={handleDeletePost}
         title="Tem certeza que deseja deletar o post?"
       >
-        <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md font-medium transition cursor-pointer">
-          Delete
+        <button className="text-sm px-3 py-1 rounded-md border border-zinc-600 text-zinc-300 hover:border-red-500 hover:text-red-400 transition">
+          Deletar
         </button>
       </DialogConfirmation>
     </div>
